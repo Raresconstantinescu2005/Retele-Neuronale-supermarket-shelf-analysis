@@ -1,7 +1,7 @@
 # Retele-Neuronale-supermarket-shelf-analysis
 
 🚀 Progres Proiect: Sistem de Analiză Rafturi (End-to-End)
-📅 Update: Implementare Pipeline Antrenare & Interfață Web
+ Update: Implementare Pipeline Antrenare & Interfață Web
 În această etapă, am finalizat arhitectura completă a proiectului, de la preprocesarea datelor brute până la vizualizarea rezultatelor într-o aplicație web.
 
 ✅ 1. Procesarea Datelor & Antrenare (Backend AI)
