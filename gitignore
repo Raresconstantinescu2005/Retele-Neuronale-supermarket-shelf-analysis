@@ -1,0 +1,14 @@
+
+data/
+
+!data/generated/
+
+
+runs/
+src/neural_network/runs/
+src/data_acquisition/runs/
+
+# Ignoră mediul virtual și cache-ul
+venv/
+.venv/
+__pycache__/

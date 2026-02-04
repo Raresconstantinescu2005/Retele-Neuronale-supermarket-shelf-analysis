@@ -1,0 +1,257 @@
+:root {
+    --primary-color: #3b82f6;       /* Albastru principal */
+    --primary-hover: #2563eb;
+    --success-color: #10b981;       /* Verde pentru OK */
+    --warning-color: #f59e0b;       /* Galben pentru Alerte medii */
+    --danger-color: #ef4444;        /* Roșu pentru Critic */
+
+    --glass-bg: rgba(255, 255, 255, 0.90); /* Mai opac pentru citire ușoară */
+    --glass-border: rgba(255, 255, 255, 0.6);
+    --text-dark: #1f2937;
+    --text-light: #6b7280;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Inter, sans-serif;
+    color: var(--text-dark);
+    min-height: 100vh;
+    background-image: url('https://images.unsplash.com/photo-1578916171728-46686eac8d58?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Imaginea stă pe loc când dai scroll */
+    position: relative;
+}
+
+/* Overlay întunecat peste imagine pentru contrast */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Întunecare 40% */
+    backdrop-filter: blur(5px);      /* Blur modern */
+    z-index: -1;
+}
+
+/* --- NAVBAR --- */
+.navbar {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1.2rem;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: -webkit-linear-gradient(45deg, #2563eb, #10b981);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 1px;
+}
+
+/* --- CONTAINER PRINCIPAL --- */
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* --- ZONA DE UPLOAD (Stil Glassmorphism) --- */
+.upload-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    margin-bottom: 3rem;
+    transition: transform 0.3s ease;
+}
+
+.upload-card:hover {
+    transform: translateY(-5px);
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 15px 40px;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    color: white;
+    font-weight: 600;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+    transition: all 0.3s ease;
+}
+
+.custom-file-upload:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
+}
+
+input[type="file"] {
+    display: none;
+}
+
+/* --- DASHBOARD GRID --- */
+.dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Două coloane egale */
+    gap: 30px;
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* --- COLOANA STÂNGA: Vizualizare --- */
+.visuals {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.img-box {
+    background: white;
+    padding: 15px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    overflow: hidden;
+}
+
+.img-box h3 {
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    border-bottom: 2px solid #f3f4f6;
+    padding-bottom: 10px;
+}
+
+.img-box img {
+    width: 100%;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.img-box img:hover {
+    transform: scale(1.02); /* Mic zoom la hover */
+}
+
+/* --- COLOANA DREAPTA: Raport --- */
+.analytics h2 {
+    color: white;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.shelf-item {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border-left: 6px solid #ccc; /* Linie gri implicit */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+/* Status Colors pentru Carduri */
+.shelf-item.ok {
+    border-left-color: var(--success-color);
+}
+
+.shelf-item.alert {
+    border-left-color: var(--danger-color);
+}
+
+.shelf-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.shelf-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--text-dark);
+}
+
+.badge {
+    background: var(--text-dark);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Stiluri text în interiorul cardului */
+.shelf-stats p {
+    margin: 8px 0;
+    font-size: 0.95rem;
+    color: var(--text-light);
+    display: flex;
+    justify-content: space-between;
+}
+
+.text-green {
+    color: var(--success-color);
+    font-weight: 700;
+}
+
+.text-red {
+    color: var(--danger-color);
+    font-weight: 700;
+}
+
+/* --- DETALII INTRUȘI --- */
+.intruders-box {
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    background: #fff7ed; /* warm background */
+    border: 1px solid #fed7aa;
+}
+
+.intruders-title {
+    font-weight: 800;
+    color: #9a3412;
+    margin-bottom: 8px;
+}
+
+.intruders-box ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.intruders-box li {
+    margin: 6px 0;
+    color: #7c2d12;
+    font-size: 0.95rem;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .dashboard {
+        grid-template-columns: 1fr; /* O singură coloană pe mobil */
+    }
+
+    .navbar h1 {
+        font-size: 1.2rem;
+    }
+}
+
+/* Animație simplă de apariție */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

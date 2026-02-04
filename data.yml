@@ -1,0 +1,9 @@
+path: data
+
+train: processed/train/images
+val: processed/validation/images
+test: processed/test/images
+
+
+nc: 1
+names: ['product']

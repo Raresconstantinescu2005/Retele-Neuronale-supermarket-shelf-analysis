@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Audit Retail</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="navbar">
+        <h1>👁️ Retail Vision AI - Audit Automat</h1>
+    </div>
+
+    <div class="container">
+
+        <div class="upload-card">
+            <form method="POST" enctype="multipart/form-data">
+                <label for="file-upload" class="custom-file-upload">
+                    📤 Încarcă o Imagine (Orice dimensiune)
+                </label>
+                <input id="file-upload" type="file" name="file" accept="image/*" onchange="this.form.submit()"/>
+            </form>
+        </div>
+
+        {% if raport %}
+        <div class="dashboard">
+
+            <div class="visuals">
+                <div class="img-box">
+                    <h3>🔍 Detecție Produse (YOLOv8)</h3>
+                    <img src="{{ url_for('static', filename='uploads/' + result) }}" alt="Rezultat Detecție">
+                </div>
+
+                <div class="img-box">
+                    <h3>🔥 Zone Aglomerate (Heatmap)</h3>
+                    <img src="{{ url_for('static', filename='uploads/' + heatmap) }}" alt="Harta Căldură">
+                </div>
+            </div>
+
+            <div class="analytics">
+                <h2>📋 Raport Detaliat pe Rafturi</h2>
+
+                {% for raft in raport %}
+                <div class="shelf-item {{ 'alert' if 'NECESITĂ' in raft.status or 'GOL' in raft.status or '🚨' in raft.intrusi else 'ok' }}">
+
+                    <div class="shelf-header">
+                        <h3>{{ raft.nume }}</h3>
+                        <span class="badge">{{ raft.cantitate }} produse</span>
+                    </div>
+
+                    <div class="shelf-stats">
+                        <p><strong>📦 Status Stoc:</strong>
+                            <span class="{{ 'text-red' if 'NECESITĂ' in raft.status or 'GOL' in raft.status else 'text-green' }}">
+                                {{ raft.status }}
+                            </span>
+                        </p>
+
+                        <p><strong>📏 Calitate Aranjare:</strong>
+                            <span>{{ raft.dezordine }}</span>
+                        </p>
+
+                        <p><strong>🎨 Dominant:</strong>
+                            <span>{{ raft.dominant if raft.dominant else '-' }}</span>
+                        </p>
+
+                        <p><strong>🕵️ Verificare Intruși:</strong>
+                            <span>{{ raft.intrusi }}</span>
+                        </p>
+
+                        {% if raft.intrusi_detalii %}
+                        <div class="intruders-box">
+                            <div class="intruders-title">Detalii intruși</div>
+                            <ul>
+                                {% for it in raft.intrusi_detalii %}
+                                <li>
+                                    <strong>{{ it.label }}</strong> (scor: {{ '%.2f'|format(it.score) }}, conf: {{ '%.2f'|format(it.conf) }})
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+
+</body>
+</html>
