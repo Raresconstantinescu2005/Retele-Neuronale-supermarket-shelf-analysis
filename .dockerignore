@@ -1,0 +1,9 @@
+data/
+models/
+runs/
+results/
+.git
+.vscode
+venv/
+__pycache__/
+*.pyc
