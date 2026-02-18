@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  shelf-analysis:
+    build: .
+    container_name: shelf_analysis_app
+    # Dacă ai nevoie de GPU (NVIDIA), decomentează liniile de mai jos (necesită nvidia-docker)
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+
+    volumes:
+      # Mapăm codul pentru a putea edita fără rebuild (opțional, bun pentru dev)
+      - ./src:/app/src
+      - ./scripts:/app/scripts
+
+      # Mapăm folderele de date și rezultate pentru persistență
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./results:/app/results
+      - ./runs:/app/runs
+
+    # Dacă ai o interfață web (văd un folder web_interface), mapează portul aici
+    # De exemplu, dacă e Flask/Streamlit pe portul 5000:
+    ports:
+      - "5000:5000"
+
+    # Poți suprascrie comanda din Dockerfile aici dacă vrei să rulezi altceva
+    # command: python src/web_interface/app.py

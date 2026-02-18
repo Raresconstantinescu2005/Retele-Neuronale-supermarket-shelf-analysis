@@ -3,92 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Audit Retail</title>
+    <title>Neural Shelf Audit | AI Vision 2026</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
 
-    <div class="navbar">
-        <h1>👁️ Retail Vision AI - Audit Automat</h1>
-    </div>
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-layer-group"></i> NEURAL<span>VISION</span>
+        </div>
+        <div class="nav-links">
+            <a href="#hero">Acasă</a>
+            <a href="#tech">Tehnologie</a>
+            <a href="#demo" class="btn-nav">Live Demo</a>
+        </div>
+    </nav>
 
-    <div class="container">
+    <canvas id="neural-canvas"></canvas>
 
-        <div class="upload-card">
-            <form method="POST" enctype="multipart/form-data">
-                <label for="file-upload" class="custom-file-upload">
-                    📤 Încarcă o Imagine (Orice dimensiune)
-                </label>
-                <input id="file-upload" type="file" name="file" accept="image/*" onchange="this.form.submit()"/>
-            </form>
+    <section id="hero" class="hero-section">
+        <div class="hero-content" data-aos="fade-right">
+            <h1>AUDIT RETAIL <br><span class="glitch" data-text="NEXT GEN">NEXT GEN</span></h1>
+            <p>Transformăm camerele video în auditori inteligenți. Analiză de raft în timp real folosind rețele neuronale convoluționale și Computer Vision avansat.</p>
+            <a href="#demo" class="cta-button">ÎNCEPE SCANAREA <i class="fa-solid fa-arrow-right"></i></a>
         </div>
 
-        {% if raport %}
-        <div class="dashboard">
-
-            <div class="visuals">
-                <div class="img-box">
-                    <h3>🔍 Detecție Produse (YOLOv8)</h3>
-                    <img src="{{ url_for('static', filename='uploads/' + result) }}" alt="Rezultat Detecție">
-                </div>
-
-                <div class="img-box">
-                    <h3>🔥 Zone Aglomerate (Heatmap)</h3>
-                    <img src="{{ url_for('static', filename='uploads/' + heatmap) }}" alt="Harta Căldură">
+        <div class="hero-visual" data-aos="fade-left">
+            <div class="tilt-card" id="tiltCard">
+                <div class="card-content">
+                    <i class="fa-solid fa-robot floating-icon"></i>
+                    <div class="scan-line"></div>
+                    <img src="https://cdn-icons-png.flaticon.com/512/3063/3063822.png" alt="AI Scanner" class="hero-img">
+                    <div class="data-overlay">
+                        <span>YOLOv8: ACTIVE</span>
+                        <span>CONFIDENCE: 99.8%</span>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <div class="analytics">
-                <h2>📋 Raport Detaliat pe Rafturi</h2>
+        <div class="scroll-indicator">
+            <span>SCROLL PENTRU DETALII</span>
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+        </div>
+    </section>
 
-                {% for raft in raport %}
-                <div class="shelf-item {{ 'alert' if 'NECESITĂ' in raft.status or 'GOL' in raft.status or '🚨' in raft.intrusi else 'ok' }}">
+    <section id="tech" class="tech-section">
+        <h2 class="section-title" data-aos="zoom-in">ARHITECTURA <span class="highlight">SISTEMULUI</span></h2>
 
-                    <div class="shelf-header">
-                        <h3>{{ raft.nume }}</h3>
-                        <span class="badge">{{ raft.cantitate }} produse</span>
-                    </div>
+        <div class="tech-grid">
+            <div class="tech-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="icon-box"><i class="fa-solid fa-eye"></i></div>
+                <h3>1. Input & Preprocesare</h3>
+                <p>Imaginea raftului este încărcată și normalizată. Folosind <strong>OpenCV</strong>, ajustăm contrastul și pregătim tensorii pentru rețeaua neuronală.</p>
+            </div>
 
-                    <div class="shelf-stats">
-                        <p><strong>📦 Status Stoc:</strong>
-                            <span class="{{ 'text-red' if 'NECESITĂ' in raft.status or 'GOL' in raft.status else 'text-green' }}">
-                                {{ raft.status }}
-                            </span>
-                        </p>
+            <div class="tech-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="icon-box"><i class="fa-solid fa-brain"></i></div>
+                <h3>2. Detecție YOLOv8</h3>
+                <p>Modelul nostru custom, antrenat pe mii de produse, identifică bounding box-urile. Arhitectura <strong>Ultralytics YOLO</strong> asigură viteza de inferență.</p>
+            </div>
 
-                        <p><strong>📏 Calitate Aranjare:</strong>
-                            <span>{{ raft.dezordine }}</span>
-                        </p>
+            <div class="tech-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="icon-box"><i class="fa-solid fa-palette"></i></div>
+                <h3>3. Analiză Cromatică</h3>
+                <p>Extragem caracteristicile HSV din fiecare produs detectat. Algoritmii de clustering determină brandul și consistența vizuală a raftului.</p>
+            </div>
 
-                        <p><strong>🎨 Dominant:</strong>
-                            <span>{{ raft.dominant if raft.dominant else '-' }}</span>
-                        </p>
+            <div class="tech-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="icon-box"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                <h3>4. Logică de Business</h3>
+                <p>Un strat logic avansat calculează planograma ideală, detectează <strong>intrușii</strong> (produse rătăcite) și generează raportul de stoc.</p>
+            </div>
+        </div>
+    </section>
 
-                        <p><strong>🕵️ Verificare Intruși:</strong>
-                            <span>{{ raft.intrusi }}</span>
-                        </p>
+    <section id="demo" class="demo-section">
+        <div class="demo-container glass-panel" data-aos="flip-up">
+            <h2 class="section-title">LANSARE <span class="highlight">ANALIZĂ</span></h2>
 
-                        {% if raft.intrusi_detalii %}
-                        <div class="intruders-box">
-                            <div class="intruders-title">Detalii intruși</div>
-                            <ul>
-                                {% for it in raft.intrusi_detalii %}
-                                <li>
-                                    <strong>{{ it.label }}</strong> (scor: {{ '%.2f'|format(it.score) }}, conf: {{ '%.2f'|format(it.conf) }})
-                                </li>
-                                {% endfor %}
-                            </ul>
+            <form method="POST" enctype="multipart/form-data" id="upload-form">
+                <div class="upload-zone">
+                    <input id="file-upload" type="file" name="file" accept="image/*" onchange="this.form.submit()"/>
+                    <label for="file-upload" class="upload-label">
+                        <div class="upload-icon-anim">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
                         </div>
-                        {% endif %}
-                    </div>
+                        <h3>Drag & Drop sau Click pentru Upload</h3>
+                        <p>Sistemul va procesa imaginea instantaneu</p>
+                    </label>
                 </div>
-                {% endfor %}
+            </form>
 
+            {% if result %}
+            <div class="results-dashboard">
+                <div class="result-viewer">
+                    <h3><i class="fa-solid fa-magnifying-glass-chart"></i> Detecție Vizuală</h3>
+                    <img src="{{ url_for('static', filename='uploads/' + result) }}" alt="Rezultat" class="res-img">
+                </div>
+
+                <div class="result-stats">
+                    <h3><i class="fa-solid fa-list-check"></i> Raport Rafturi</h3>
+                    {% for raft in raport %}
+                    <div class="stat-row {{ 'critical' if '🚨' in raft.intrusi or 'GOL' in raft.status else 'optimal' }}">
+                        <div class="stat-id">{{ raft.nume }}</div>
+                        <div class="stat-info">
+                            <div class="stat-status">{{ raft.status }}</div>
+                            <div class="stat-intruder">{{ raft.intrusi }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
+            {% endif %}
         </div>
-        {% endif %}
+    </section>
 
-    </div>
+    <footer>
+        <p>&copy; 2026 Neural Vision Systems. Powered by Python & PyTorch.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        // --- 1. NEURAL NETWORK CANVAS ANIMATION ---
+        const canvas = document.getElementById('neural-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray;
+
+        // Mouse position
+        let mouse = { x: null, y: null, radius: (canvas.height/80) * (canvas.width/80) }
+
+        window.addEventListener('mousemove', function(event) {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) {
+                this.x = x; this.y = y;
+                this.directionX = directionX; this.directionY = directionY;
+                this.size = size; this.color = color;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = '#00f3ff';
+                ctx.fill();
+            }
+            update() {
+                if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
+                if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
+
+                // Mouse interaction
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx*dx + dy*dy);
+                if (distance < mouse.radius + this.size){
+                    if (mouse.x < this.x && this.x < canvas.width - this.size * 10) this.x += 10;
+                    if (mouse.x > this.x && this.x > this.size * 10) this.x -= 10;
+                    if (mouse.y < this.y && this.y < canvas.height - this.size * 10) this.y += 10;
+                    if (mouse.y > this.y && this.y > this.size * 10) this.y -= 10;
+                }
+                this.x += this.directionX;
+                this.y += this.directionY;
+                this.draw();
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2) + 1;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * 1) - 0.5;
+                let directionY = (Math.random() * 1) - 0.5;
+                let color = '#00f3ff';
+                particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+            }
+        }
+
+        function connect(){
+            let opacityValue = 1;
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) +
+                                   ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                    if (distance < (canvas.width/7) * (canvas.height/7)) {
+                        opacityValue = 1 - (distance/20000);
+                        ctx.strokeStyle = 'rgba(0, 243, 255,' + opacityValue + ')';
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0,0,innerWidth, innerHeight);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+            }
+            connect();
+        }
+
+        window.addEventListener('resize', function(){
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+            init();
+        });
+
+        init();
+        animate();
+
+        // --- 2. 3D TILT EFFECT FOR CARD ---
+        const card = document.getElementById('tiltCard');
+        const container = document.querySelector('.hero-section');
+
+        container.addEventListener('mousemove', (e) => {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+
+        container.addEventListener('mouseenter', (e) => {
+            card.style.transition = 'none';
+        });
+
+        container.addEventListener('mouseleave', (e) => {
+            card.style.transition = 'all 0.5s ease';
+            card.style.transform = `rotateY(0deg) rotateX(0deg)`;
+        });
+
+    </script>
+
+    {% if result %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Asteptam putin sa se randeze tot (optional, dar mai sigur)
+            setTimeout(function() {
+                const demoSection = document.getElementById('demo');
+                if (demoSection) {
+                    demoSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 100);
+        });
+    </script>
+    {% endif %}
 
 </body>
 </html>

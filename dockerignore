@@ -1,0 +1,18 @@
+# Ignorăm git și setările IDE-ului
+.git
+.vscode
+.idea
+
+# Ignorăm mediile virtuale locale
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+
+# FOARTE IMPORTANT: Ignorăm datele mari și modelele antrenate local
+# Le vom monta prin Volume în docker-compose, nu le copiem în imagine
+data/
+models/
+runs/
+results/
