@@ -1,0 +1,62 @@
+# Ignore dataset images and processed data
+/data/
+
+# Keep config and small generated artifacts but ignore big generated images
+data/raw/
+data/processed/
+
+# Node / build artifacts
+dist/
+build/
+
+# Models and large binaries (uncomment if you want to track model files)
+models/*.pt
+models/*.pth
+models/*.h5
+models/*.onnx
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+env/
+venv/
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# IDEs
+.vscode/
+.idea/
+
+# Archives
+*.zip
+*.tar.gz
+
+# Streamlit cache
+.streamlit/
+
+# Ignore secrets
+.env
+
+# Ignore results from runs
+runs/
+
+# Keep README and docs but ignore demo media if large
+docs/demo/
+
+# Ignore compiled C extensions
+*.so
+
+# Allow explicit exceptions: if you need to keep a specific small file in data, add it to the repo and remove this rule locally
+# Example to include a small metadata file: !data/README.md
+
